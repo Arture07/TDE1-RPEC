@@ -1,3 +1,7 @@
+package estruturas;
+
+import model.Pixel;
+
 public class Pilha {
     private No topo;
 

@@ -1,15 +1,26 @@
+package servico;
+
+import estruturas.Fila;
+import estruturas.Pilha;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import model.Pixel;
 
 public class FloodFill {
+
     public void preencherPilha(BufferedImage img, int xInicial, int yInicial, Color cor, int salvarACada, String pasta) {
         int corFundo = img.getRGB(xInicial, yInicial);
         int corNova = cor.getRGB();
 
         if (corFundo == corNova) {
             return;
+        }
+
+        File pastaDir = new File(pasta);
+        if (!pastaDir.exists()) {
+            pastaDir.mkdirs();
         }
 
         Pilha pilha = new Pilha();
@@ -26,13 +37,16 @@ public class FloodFill {
             if (x < 0 || x >= img.getWidth() || y < 0 || y >= img.getHeight()) {
                 continue;
             }
+
             if (img.getRGB(x, y) == corFundo) {
                 img.setRGB(x, y, corNova);
                 contador++;
+
                 if (contador % salvarACada == 0) {
                     salvar(img, pasta + "/frame_" + frame + ".png");
                     frame++;
                 }
+
                 pilha.empilhar(new Pixel(x + 1, y));
                 pilha.empilhar(new Pixel(x - 1, y));
                 pilha.empilhar(new Pixel(x, y + 1));
@@ -50,6 +64,11 @@ public class FloodFill {
             return;
         }
 
+        File pastaDir = new File(pasta);
+        if (!pastaDir.exists()) {
+            pastaDir.mkdirs();
+        }
+
         Fila fila = new Fila();
         fila.enfileirar(new Pixel(xInicial, yInicial));
 
@@ -60,16 +79,20 @@ public class FloodFill {
             Pixel p = fila.desenfileirar();
             int x = p.getX();
             int y = p.getY();
+
             if (x < 0 || x >= img.getWidth() || y < 0 || y >= img.getHeight()) {
                 continue;
             }
+
             if (img.getRGB(x, y) == corFundo) {
                 img.setRGB(x, y, corNova);
                 contador++;
+
                 if (contador % salvarACada == 0) {
                     salvar(img, pasta + "/frame_" + frame + ".png");
                     frame++;
                 }
+
                 fila.enfileirar(new Pixel(x + 1, y));
                 fila.enfileirar(new Pixel(x - 1, y));
                 fila.enfileirar(new Pixel(x, y + 1));

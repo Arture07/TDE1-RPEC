@@ -1,3 +1,7 @@
+package estruturas;
+
+import model.Pixel;
+
 public class No {
     private Pixel pixel;
     private No proximo;

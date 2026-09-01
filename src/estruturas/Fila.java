@@ -1,3 +1,8 @@
+package estruturas;
+
+
+import model.Pixel;
+
 public class Fila {
     private No inicio;
     private No fim;
@@ -23,7 +28,7 @@ public class Fila {
         }
         Pixel pixelRemovido = inicio.getPixel();
         inicio = inicio.getProximo();
-        
+
         if (inicio == null) {
             fim = null;
         }
